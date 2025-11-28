@@ -1,0 +1,1 @@
+export default function ApplyTutor(){ return (<div style={{padding:30}}><h1>Apply as Tutor</h1><p>Upload resume and fill application. (This form is for tutors only.)</p></div>) }

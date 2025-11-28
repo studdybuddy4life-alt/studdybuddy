@@ -1,0 +1,1 @@
+Place your StudyBuddy logo image here as logo.png (recommended size 200x200).

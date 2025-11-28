@@ -1,0 +1,2 @@
+import UsageRemaining from '../components/UsageRemaining'
+export default function Dashboard(){ const userId='demo-user-id'; return (<div style={{padding:30}}><h1>Student Dashboard</h1><UsageRemaining userId={userId} /></div>) }
