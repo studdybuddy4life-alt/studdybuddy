@@ -21,6 +21,16 @@ const server = http.createServer(app);
 app.use(cors());
 app.use(express.json());
 
+// simple root and health endpoints for Render / monitoring
+app.get('/', (req, res) => {
+  res.type('text').status(200).send('StudyBuddy backend — OK');
+});
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+
 // Mount routes
 app.use('/auth', authRoute);
 app.use('/booking', bookingRoute);
