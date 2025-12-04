@@ -616,14 +616,41 @@ export default function Home() {
             <div style={styles.card}>
               <h3 style={styles.cardTitle}>Send us a message</h3>
               <form
-                style={styles.form}
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  alert(
-                    "Thank you for contacting StudyBuddy! This form is a demo UI – you can connect it to your backend later."
-                  );
-                }}
-              >
+  style={styles.form}
+  onSubmit={async (e) => {
+    e.preventDefault();
+
+    const formData = {
+      name: e.target.name.value,
+      email: e.target.email.value,
+      grade: e.target.grade.value,
+      message: e.target.message.value,
+    };
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/contact`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert("Your message has been sent successfully!");
+        e.target.reset();
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Could not connect to server. Try again later.");
+    }
+  }}
+>
                 <div>
                   <label style={styles.label} htmlFor="name">
                     Your name
