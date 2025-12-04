@@ -1,8 +1,10 @@
 // Frontend/pages/index.js
-// Simple StudyBuddy landing page – ready to use
+// StudyBuddy landing page with logo, About, Reviews & Contact
+
+import Image from "next/image";
 
 export default function Home() {
-  const page = {
+  const styles = {
     main: {
       backgroundColor: "#020617",
       color: "white",
@@ -13,20 +15,53 @@ export default function Home() {
       flexDirection: "column",
       alignItems: "stretch",
     },
-    section: {
+    shell: {
       width: "100%",
       maxWidth: "1100px",
       margin: "0 auto",
-      padding: "3rem 1.5rem",
+      padding: "0 1.5rem 3rem",
     },
-    hero: {
+    nav: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: "1.4rem 1.5rem 0.8rem",
+      borderBottom: "1px solid rgba(30,41,59,1)",
+      position: "sticky",
+      top: 0,
+      zIndex: 20,
+      background:
+        "linear-gradient(to bottom, rgba(15,23,42,0.98), rgba(15,23,42,0.9), rgba(15,23,42,0.85))",
+      backdropFilter: "blur(16px)",
+    },
+    navLeft: { display: "flex", alignItems: "center", gap: "0.6rem" },
+    brandName: {
+      fontWeight: 700,
+      fontSize: "1.1rem",
+      letterSpacing: "0.03em",
+    },
+    navLinks: {
+      display: "flex",
+      gap: "1rem",
+      fontSize: "0.9rem",
+      color: "rgba(148,163,184,0.9)",
+    },
+    navLink: {
+      textDecoration: "none",
+      cursor: "pointer",
+    },
+    section: {
+      paddingTop: "2.5rem",
+    },
+    heroLayout: {
       display: "flex",
       flexDirection: "column",
       gap: "1.5rem",
       alignItems: "flex-start",
+      marginTop: "2.5rem",
     },
     heroTitle: {
-      fontSize: "2.75rem",
+      fontSize: "2.6rem",
       lineHeight: 1.1,
       fontWeight: 800,
     },
@@ -34,19 +69,19 @@ export default function Home() {
       color: "#38bdf8",
     },
     heroSub: {
-      fontSize: "1.1rem",
-      maxWidth: "620px",
-      color: "rgba(226,232,240,0.85)",
+      fontSize: "1.05rem",
+      maxWidth: "640px",
+      color: "rgba(226,232,240,0.9)",
     },
     pillRow: {
       display: "flex",
       flexWrap: "wrap",
       gap: "0.5rem",
-      marginTop: "0.5rem",
+      marginTop: "0.4rem",
     },
     pill: {
-      fontSize: "0.8rem",
-      padding: "0.35rem 0.8rem",
+      fontSize: "0.78rem",
+      padding: "0.3rem 0.8rem",
       borderRadius: "999px",
       background:
         "linear-gradient(90deg, rgba(56,189,248,0.12), rgba(129,140,248,0.12))",
@@ -60,7 +95,7 @@ export default function Home() {
       marginTop: "0.5rem",
     },
     primaryButton: {
-      padding: "0.8rem 1.5rem",
+      padding: "0.8rem 1.6rem",
       borderRadius: "999px",
       border: "none",
       background:
@@ -70,13 +105,13 @@ export default function Home() {
       fontSize: "0.95rem",
       cursor: "pointer",
       textDecoration: "none",
-      boxShadow: "0 12px 22px rgba(15,23,42,0.7)",
+      boxShadow: "0 12px 22px rgba(15,23,42,0.8)",
     },
     secondaryButton: {
-      padding: "0.8rem 1.5rem",
+      padding: "0.8rem 1.6rem",
       borderRadius: "999px",
       border: "1px solid rgba(148,163,184,0.7)",
-      backgroundColor: "rgba(15,23,42,0.85)",
+      backgroundColor: "rgba(15,23,42,0.9)",
       color: "rgba(226,232,240,0.9)",
       fontWeight: 500,
       fontSize: "0.95rem",
@@ -84,71 +119,32 @@ export default function Home() {
       textDecoration: "none",
     },
     statBar: {
-      marginTop: "2.5rem",
+      marginTop: "2.2rem",
       display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+      gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
       gap: "1rem",
       padding: "1.1rem 1.25rem",
       borderRadius: "1rem",
       background:
-        "radial-gradient(circle at top left, rgba(56,189,248,0.15), transparent 60%), radial-gradient(circle at bottom right, rgba(129,140,248,0.18), transparent 60%)",
+        "radial-gradient(circle at top left, rgba(56,189,248,0.16), transparent 60%), radial-gradient(circle at bottom right, rgba(129,140,248,0.18), transparent 60%)",
       border: "1px solid rgba(51,65,85,0.8)",
     },
-    statItem: {
-      display: "flex",
-      flexDirection: "column",
-      gap: "0.15rem",
-    },
-    statNumber: {
-      fontWeight: 700,
-      fontSize: "1.1rem",
-    },
+    statItem: { display: "flex", flexDirection: "column", gap: "0.15rem" },
+    statNumber: { fontWeight: 700, fontSize: "1.05rem" },
     statLabel: {
       fontSize: "0.8rem",
       color: "rgba(148,163,184,0.9)",
     },
     sectionTitle: {
-      fontSize: "1.6rem",
+      fontSize: "1.7rem",
       fontWeight: 700,
-      marginBottom: "0.75rem",
+      marginBottom: "0.6rem",
     },
     sectionSub: {
       fontSize: "0.95rem",
-      color: "rgba(148,163,184,0.95)",
-      maxWidth: "640px",
-      marginBottom: "1.8rem",
-    },
-    featureGrid: {
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))",
-      gap: "1.2rem",
-    },
-    card: {
-      borderRadius: "1.2rem",
-      padding: "1.3rem 1.2rem",
-      background:
-        "linear-gradient(145deg, rgba(15,23,42,0.85), rgba(15,23,42,1))",
-      border: "1px solid rgba(51,65,85,0.9)",
-    },
-    cardTitle: {
-      fontSize: "1rem",
-      fontWeight: 600,
-      marginBottom: "0.35rem",
-    },
-    cardText: {
-      fontSize: "0.9rem",
-      color: "rgba(148,163,184,0.95)",
-    },
-    badge: {
-      display: "inline-flex",
-      alignItems: "center",
-      justifyContent: "center",
-      fontSize: "0.75rem",
-      padding: "0.2rem 0.65rem",
-      borderRadius: "999px",
-      backgroundColor: "rgba(22,163,74,0.15)",
-      color: "#4ade80",
-      marginLeft: "0.4rem",
+      color: "rgba(148,163,184,0.96)",
+      maxWidth: "670px",
+      marginBottom: "1.6rem",
     },
     twoCol: {
       display: "grid",
@@ -156,224 +152,466 @@ export default function Home() {
       gap: "1.6rem",
       marginTop: "0.5rem",
     },
+    card: {
+      borderRadius: "1.2rem",
+      padding: "1.3rem 1.2rem",
+      background:
+        "linear-gradient(145deg, rgba(15,23,42,0.9), rgba(15,23,42,1))",
+      border: "1px solid rgba(51,65,85,0.95)",
+    },
+    cardTitle: { fontSize: "1.02rem", fontWeight: 600, marginBottom: "0.4rem" },
+    cardText: {
+      fontSize: "0.9rem",
+      color: "rgba(148,163,184,0.96)",
+    },
+    tag: {
+      fontSize: "0.75rem",
+      padding: "0.2rem 0.55rem",
+      borderRadius: "999px",
+      backgroundColor: "rgba(34,197,94,0.15)",
+      color: "#4ade80",
+      marginLeft: "0.3rem",
+    },
     list: {
       listStyle: "none",
       padding: 0,
-      margin: "0.5rem 0 0",
+      margin: "0.6rem 0 0",
       display: "flex",
       flexDirection: "column",
       gap: "0.45rem",
     },
     listItem: {
       display: "flex",
-      alignItems: "flex-start",
       gap: "0.4rem",
       fontSize: "0.9rem",
       color: "rgba(148,163,184,0.95)",
     },
     bullet: {
-      width: "0.45rem",
-      height: "0.45rem",
+      width: "0.42rem",
+      height: "0.42rem",
       marginTop: "0.3rem",
       borderRadius: "999px",
       background:
         "linear-gradient(135deg, #38bdf8, #6366f1)",
       flexShrink: 0,
     },
+    reviewGrid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+      gap: "1.3rem",
+    },
+    reviewCard: {
+      borderRadius: "1.1rem",
+      padding: "1.1rem 1.1rem",
+      background:
+        "radial-gradient(circle at top, rgba(52,211,153,0.12), rgba(15,23,42,1))",
+      border: "1px solid rgba(34,197,94,0.35)",
+    },
+    reviewName: {
+      marginTop: "0.7rem",
+      fontSize: "0.85rem",
+      color: "rgba(148,163,184,0.9)",
+    },
+    starRow: {
+      display: "flex",
+      gap: "0.12rem",
+      fontSize: "0.95rem",
+      color: "#facc15",
+    },
+    contactGrid: {
+      display: "grid",
+      gridTemplateColumns: "minmax(0, 1.1fr) minmax(0, 1.3fr)",
+      gap: "1.6rem",
+      alignItems: "flex-start",
+    },
+    contactInfoBox: {
+      ...this?.card,
+    },
+    contactLine: {
+      fontSize: "0.9rem",
+      color: "rgba(148,163,184,0.95)",
+      marginBottom: "0.4rem",
+    },
+    form: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "0.75rem",
+    },
+    label: {
+      fontSize: "0.8rem",
+      marginBottom: "0.1rem",
+      color: "rgba(148,163,184,0.95)",
+    },
+    input: {
+      width: "100%",
+      padding: "0.6rem 0.75rem",
+      borderRadius: "0.7rem",
+      border: "1px solid rgba(51,65,85,1)",
+      backgroundColor: "rgba(15,23,42,0.95)",
+      color: "white",
+      fontSize: "0.9rem",
+    },
+    textarea: {
+      width: "100%",
+      minHeight: "120px",
+      padding: "0.7rem 0.75rem",
+      borderRadius: "0.7rem",
+      border: "1px solid rgba(51,65,85,1)",
+      backgroundColor: "rgba(15,23,42,0.95)",
+      color: "white",
+      fontSize: "0.9rem",
+      resize: "vertical",
+    },
     footer: {
       borderTop: "1px solid rgba(30,41,59,1)",
-      padding: "1rem 1.5rem 1.5rem",
+      padding: "1rem 1.5rem 1.4rem",
       marginTop: "1rem",
-      fontSize: "0.8rem",
-      color: "rgba(148,163,184,0.8)",
+      fontSize: "0.78rem",
+      color: "rgba(148,163,184,0.85)",
       textAlign: "center",
     },
   };
 
+  const reviews = [
+    {
+      quote:
+        "The sessions are clear, friendly and focused on exam questions. My child finally feels confident in biology again.",
+      who: "Parent of Grade 11 student – USA",
+    },
+    {
+      quote:
+        "I love how doubts are solved step by step with real-life examples. It feels like having a personal guide for NEET prep.",
+      who: "NEET aspirant – online learner",
+    },
+    {
+      quote:
+        "As a tutor, I appreciate that students come prepared and motivated. The platform makes scheduling and follow-up simple.",
+      who: "StudyBuddy biology tutor",
+    },
+  ];
+
+  const handleNavClick = (id) => {
+    if (typeof window === "undefined") return;
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
-    <main style={page.main}>
-      {/* HERO */}
-      <section style={page.section}>
-        <div style={page.hero}>
-          <p style={{ fontSize: "0.9rem", color: "rgba(148,163,184,0.9)" }}>
-            Personalised 1:1 online tutoring for US school students
+    <main style={styles.main}>
+      {/* NAVBAR */}
+      <header style={styles.nav}>
+        <div style={styles.navLeft}>
+          <Image
+            src="/studybuddy-logo.svg"
+            alt="StudyBuddy logo"
+            width={36}
+            height={36}
+            priority
+          />
+          <span style={styles.brandName}>StudyBuddy</span>
+        </div>
+        <nav style={styles.navLinks}>
+          <button
+            type="button"
+            style={{ ...styles.navLink, background: "none", border: "none" }}
+            onClick={() => handleNavClick("about")}
+          >
+            About
+          </button>
+          <button
+            type="button"
+            style={{ ...styles.navLink, background: "none", border: "none" }}
+            onClick={() => handleNavClick("reviews")}
+          >
+            Reviews
+          </button>
+          <button
+            type="button"
+            style={{ ...styles.navLink, background: "none", border: "none" }}
+            onClick={() => handleNavClick("contact")}
+          >
+            Contact
+          </button>
+        </nav>
+      </header>
+
+      <div style={styles.shell}>
+        {/* HERO */}
+        <section style={styles.section}>
+          <div style={styles.heroLayout}>
+            <p
+              style={{
+                fontSize: "0.9rem",
+                color: "rgba(148,163,184,0.9)",
+              }}
+            >
+              Personalised 1:1 online tutoring for school students & NEET
+              aspirants.
+            </p>
+
+            <h1 style={styles.heroTitle}>
+              Your{" "}
+              <span style={styles.heroHighlight}>trusted mentor</span> for
+              science success.
+            </h1>
+
+            <p style={styles.heroSub}>
+              StudyBuddy connects motivated students with an experienced biology
+              mentor who has several years of teaching advanced school biology
+              and competitive exam courses, plus a strong research background in
+              biotechnology and life sciences.
+            </p>
+
+            <div style={styles.pillRow}>
+              <span style={styles.pill}>6+ years teaching experience</span>
+              <span style={styles.pill}>Biology & NEET preparation</span>
+              <span style={styles.pill}>Research & publications</span>
+              <span style={styles.pill}>Interactive doubt-solving</span>
+            </div>
+
+            <div style={styles.buttonRow}>
+              <a href="/signup" style={styles.primaryButton}>
+                🎓 Book a free intro session
+              </a>
+              <a href="/apply-tutor" style={styles.secondaryButton}>
+                🧑‍🏫 Join as a tutor (coming soon)
+              </a>
+            </div>
+
+            <div style={styles.statBar}>
+              <div style={styles.statItem}>
+                <span style={styles.statNumber}>1-to-1</span>
+                <span style={styles.statLabel}>Live biology sessions</span>
+              </div>
+              <div style={styles.statItem}>
+                <span style={styles.statNumber}>Exam-focused</span>
+                <span style={styles.statLabel}>NEET & school boards</span>
+              </div>
+              <div style={styles.statItem}>
+                <span style={styles.statNumber}>Concept + practice</span>
+                <span style={styles.statLabel}>Notes, PYQs & tests</span>
+              </div>
+              <div style={styles.statItem}>
+                <span style={styles.statNumber}>Flexible</span>
+                <span style={styles.statLabel}>Online & reschedulable</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ABOUT & MENTOR */}
+        <section id="about" style={styles.section}>
+          <h2 style={styles.sectionTitle}>About StudyBuddy</h2>
+          <p style={styles.sectionSub}>
+            StudyBuddy is built around a simple idea: combine strong subject
+            expertise with patient mentoring so that students not only score
+            well, but also enjoy learning biology. The lead mentor behind
+            StudyBuddy has several years of experience teaching high-school and
+            entrance-exam biology to learners across India and international
+            online classrooms, along with hands-on lab and research work in
+            microbiology, molecular biology and food science.
           </p>
 
-          <h1 style={page.heroTitle}>
-            StudyBuddy – your{" "}
-            <span style={page.heroHighlight}>smart study partner</span> for
-            school & test prep.
-          </h1>
+          <div style={styles.twoCol}>
+            <div style={styles.card}>
+              <h3 style={styles.cardTitle}>
+                Lead Biology Mentor<span style={styles.tag}>Expert guide</span>
+              </h3>
+              <p style={styles.cardText}>
+                Your mentor has taught thousands of students in online and
+                offline classrooms, delivered structured courses for board exams
+                and medical entrance preparation, and guided learners through
+                everything from basics to high-level problem solving. Their
+                background includes postgraduate training in biotechnology and
+                laboratory experience with modern techniques like PCR, DNA/RNA
+                isolation and chromatographic analysis.
+              </p>
+              <ul style={styles.list}>
+                <li style={styles.listItem}>
+                  <span style={styles.bullet} />
+                  6+ years teaching biology for senior secondary and entrance
+                  exams.
+                </li>
+                <li style={styles.listItem}>
+                  <span style={styles.bullet} />
+                  Experience working with online learning platforms, coaching
+                  institutes and individual home tutoring.
+                </li>
+                <li style={styles.listItem}>
+                  <span style={styles.bullet} />
+                  Research and publications in the area of functional foods and
+                  antioxidant properties.
+                </li>
+              </ul>
+            </div>
 
-          <p style={page.heroSub}>
-            Match with a vetted tutor, book flexible sessions, track progress,
-            and get doubts solved fast. Designed for busy students, supportive
-            parents, and passionate tutors.
+            <div style={styles.card}>
+              <h3 style={styles.cardTitle}>How sessions are structured</h3>
+              <p style={styles.cardText}>
+                Sessions are interactive and exam-oriented. Each class blends
+                concept explanation with diagrams, flow-charts, memory tricks
+                and high-quality questions. Students receive guidance on what to
+                study, how to revise and how to attempt questions under time
+                pressure.
+              </p>
+              <ul style={styles.list}>
+                <li style={styles.listItem}>
+                  <span style={styles.bullet} />
+                  Diagnostic discussion to identify your current level.
+                </li>
+                <li style={styles.listItem}>
+                  <span style={styles.bullet} />
+                  Customized study plan with topic-wise milestones.
+                </li>
+                <li style={styles.listItem}>
+                  <span style={styles.bullet} />
+                  Regular practice sheets, doubt-clearing and test discussion.
+                </li>
+                <li style={styles.listItem}>
+                  <span style={styles.bullet} />
+                  Honest feedback with focus on building confidence.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* REVIEWS */}
+        <section id="reviews" style={styles.section}>
+          <h2 style={styles.sectionTitle}>What learners say</h2>
+          <p style={styles.sectionSub}>
+            Here are a few words from students, parents and tutors who have
+            worked with the mentor behind StudyBuddy.
           </p>
 
-          <div style={page.pillRow}>
-            <span style={page.pill}>Grades 1–12</span>
-            <span style={page.pill}>Math • Science • English & more</span>
-            <span style={page.pill}>1:1 live sessions</span>
-            <span style={page.pill}>Dashboard & progress reports</span>
+          <div style={styles.reviewGrid}>
+            {reviews.map((r, idx) => (
+              <article key={idx} style={styles.reviewCard}>
+                <div style={styles.starRow}>
+                  <span>★</span>
+                  <span>★</span>
+                  <span>★</span>
+                  <span>★</span>
+                  <span>★</span>
+                </div>
+                <p
+                  style={{
+                    fontSize: "0.9rem",
+                    marginTop: "0.5rem",
+                    color: "rgba(226,232,240,0.92)",
+                  }}
+                >
+                  {r.quote}
+                </p>
+                <p style={styles.reviewName}>{r.who}</p>
+              </article>
+            ))}
           </div>
+        </section>
 
-          <div style={page.buttonRow}>
-            <a href="/signup" style={page.primaryButton}>
-              🎓 I&apos;m a Student / Parent
-            </a>
-            <a href="/apply-tutor" style={page.secondaryButton}>
-              🧑‍🏫 I want to Teach
-            </a>
-          </div>
-
-          <div style={page.statBar}>
-            <div style={page.statItem}>
-              <span style={page.statNumber}>1-to-1</span>
-              <span style={page.statLabel}>Live personalised classes</span>
-            </div>
-            <div style={page.statItem}>
-              <span style={page.statNumber}>Flexible</span>
-              <span style={page.statLabel}>Schedule & rescheduling options</span>
-            </div>
-            <div style={page.statItem}>
-              <span style={page.statNumber}>Goal-based</span>
-              <span style={page.statLabel}>Homework, tests & exam prep</span>
-            </div>
-            <div style={page.statItem}>
-              <span style={page.statNumber}>Dashboard</span>
-              <span style={page.statLabel}>Track sessions & payments</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* KEY FEATURES */}
-      <section style={{ ...page.section, paddingTop: "1rem" }}>
-        <h2 style={page.sectionTitle}>What you can do on StudyBuddy</h2>
-        <p style={page.sectionSub}>
-          The platform is built to make learning simple and transparent for
-          everyone – students, parents and tutors.
-        </p>
-
-        <div style={page.featureGrid}>
-          <div style={page.card}>
-            <h3 style={page.cardTitle}>Smart tutor matching</h3>
-            <p style={page.cardText}>
-              Students can browse tutor profiles, subjects and pricing to find
-              the right fit for their learning style and budget.
-            </p>
-          </div>
-
-          <div style={page.card}>
-            <h3 style={page.cardTitle}>Easy booking & scheduling</h3>
-            <p style={page.cardText}>
-              Book 1:1 online sessions, choose time slots that work, and receive
-              automatic reminders so you never miss a class.
-            </p>
-          </div>
-
-          <div style={page.card}>
-            <h3 style={page.cardTitle}>
-              Progress tracking
-              <span style={page.badge}>Coming soon</span>
-            </h3>
-            <p style={page.cardText}>
-              Students and parents get a simple view of completed sessions,
-              topics covered and upcoming plans.
-            </p>
-          </div>
-
-          <div style={page.card}>
-            <h3 style={page.cardTitle}>Secure payments</h3>
-            <p style={page.cardText}>
-              Tutors are paid fairly and on time, while parents enjoy transparent
-              pricing and receipts for every session.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* FOR STUDENTS & TUTORS */}
-      <section style={{ ...page.section, paddingTop: "1rem" }}>
-        <h2 style={page.sectionTitle}>Built for students & tutors</h2>
-        <div style={page.twoCol}>
-          <div style={page.card}>
-            <h3 style={page.cardTitle}>For students & parents</h3>
-            <ul style={page.list}>
-              <li style={page.listItem}>
-                <span style={page.bullet} />
-                Get personalised 1:1 support in school subjects and exam prep.
-              </li>
-              <li style={page.listItem}>
-                <span style={page.bullet} />
-                Ask unlimited doubts during live sessions.
-              </li>
-              <li style={page.listItem}>
-                <span style={page.bullet} />
-                Choose tutors based on experience, reviews and availability.
-              </li>
-              <li style={page.listItem}>
-                <span style={page.bullet} />
-                Track all sessions and payments in one place.
-              </li>
-            </ul>
-          </div>
-
-          <div style={page.card}>
-            <h3 style={page.cardTitle}>For tutors</h3>
-            <ul style={page.list}>
-              <li style={page.listItem}>
-                <span style={page.bullet} />
-                Create a clear profile with subjects, grades and hourly rate.
-              </li>
-              <li style={page.listItem}>
-                <span style={page.bullet} />
-                Receive booking requests from interested students.
-              </li>
-              <li style={page.listItem}>
-                <span style={page.bullet} />
-                Manage your schedule, sessions and payments from one dashboard.
-              </li>
-              <li style={page.listItem}>
-                <span style={page.bullet} />
-                Focus on teaching – we handle the tech.
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* SIMPLE CTA SECTION */}
-      <section style={{ ...page.section, paddingTop: "1rem", paddingBottom: "2rem" }}>
-        <div
-          style={{
-            ...page.card,
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.9rem",
-            alignItems: "flex-start",
-          }}
-        >
-          <h2 style={{ ...page.sectionTitle, marginBottom: 0, fontSize: "1.4rem" }}>
-            Ready to try StudyBuddy?
-          </h2>
-          <p style={page.cardText}>
-            Create a free account in minutes. You can explore tutors, book your
-            first session and start learning – all from this platform.
+        {/* CONTACT */}
+        <section id="contact" style={styles.section}>
+          <h2 style={styles.sectionTitle}>Contact us</h2>
+          <p style={styles.sectionSub}>
+            Have a question about classes, availability or pricing? Share your
+            details and we&apos;ll get in touch with you. You can also use the
+            form to request a demo class or discuss a custom study plan.
           </p>
-          <div style={page.buttonRow}>
-            <a href="/signup" style={page.primaryButton}>
-              Get started as student
-            </a>
-            <a href="/apply-tutor" style={page.secondaryButton}>
-              Apply as tutor
-            </a>
-          </div>
-        </div>
-      </section>
 
-      <footer style={page.footer}>
+          <div style={styles.contactGrid}>
+            <div style={styles.card}>
+              <h3 style={styles.cardTitle}>Quick info</h3>
+              <p style={styles.cardText}>
+                StudyBuddy currently offers online 1:1 sessions for school
+                biology and NEET-oriented biology. All classes are conducted
+                live over secure video platforms with digital notes and doubt-
+                solving.
+              </p>
+              <div style={{ marginTop: "0.7rem" }}>
+                <p style={styles.contactLine}>
+                  📍 Online from India – available for students across time
+                  zones.
+                </p>
+                <p style={styles.contactLine}>
+                  ⏰ Flexible evening and weekend slots (IST).
+                </p>
+                <p style={styles.contactLine}>
+                  ✉️ For direct queries, you can also write to us via this form.
+                </p>
+              </div>
+            </div>
+
+            <div style={styles.card}>
+              <h3 style={styles.cardTitle}>Send us a message</h3>
+              <form
+                style={styles.form}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  alert(
+                    "Thank you for contacting StudyBuddy! This form is a demo UI – you can connect the backend later."
+                  );
+                }}
+              >
+                <div>
+                  <label style={styles.label} htmlFor="name">
+                    Your name
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="Enter your name"
+                    style={styles.input}
+                    required
+                  />
+                </div>
+                <div>
+                  <label style={styles.label} htmlFor="email">
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    style={styles.input}
+                    required
+                  />
+                </div>
+                <div>
+                  <label style={styles.label} htmlFor="grade">
+                    Grade / exam
+                  </label>
+                  <input
+                    id="grade"
+                    name="grade"
+                    type="text"
+                    placeholder="e.g. Grade 11, NEET 2026"
+                    style={styles.input}
+                  />
+                </div>
+                <div>
+                  <label style={styles.label} htmlFor="message">
+                    How can we help?
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Share your goals, topics or doubts…"
+                    style={styles.textarea}
+                    required
+                  />
+                </div>
+                <button type="submit" style={styles.primaryButton}>
+                  Submit enquiry
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <footer style={styles.footer}>
         StudyBuddy · Frontend hosted on Vercel · Backend API on Render
       </footer>
     </main>
