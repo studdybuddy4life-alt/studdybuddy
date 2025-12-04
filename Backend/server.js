@@ -15,6 +15,8 @@ const referralRoute = require('./routes/referral');
 const subscriptionRoute = require('./routes/subscription');
 const subscriptionUsageRoute = require('./routes/subscriptionUsage');
 
+const contactRoute = require("./routes/contact");
+
 const app = express();
 const server = http.createServer(app);
 
@@ -38,6 +40,8 @@ app.use('/payment', paymentRoute);
 app.use('/referral', referralRoute);
 app.use('/subscription', subscriptionRoute);
 app.use('/subscription-usage', subscriptionUsageRoute);
+app.use("/api/contact", contactRoute);
+
 
 // DB connect
 const MONGO = process.env.MONGO_URI || 'mongodb://localhost:27017/studybuddy';
