@@ -618,38 +618,38 @@ export default function Home() {
               <form
   style={styles.form}
   onSubmit={async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const formData = {
-      name: e.target.name.value,
-      email: e.target.email.value,
-      grade: e.target.grade.value,
-      message: e.target.message.value,
-    };
+  const formData = {
+    name: e.target.name.value,
+    email: e.target.email.value,
+    grade: e.target.grade.value,
+    message: e.target.message.value,
+  };
 
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/contact`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        }
-      );
-
-      const data = await res.json();
-
-      if (data.success) {
-        alert("Your message has been sent successfully!");
-        e.target.reset();
-      } else {
-        alert("Something went wrong. Please try again.");
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/contact`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       }
-    } catch (error) {
-      console.error(error);
-      alert("Could not connect to server. Try again later.");
+    );
+
+    const data = await res.json();
+
+    if (data.success) {
+      alert("🎉 Thank you for contacting StudyBuddy! We will get back to you shortly.");
+      e.target.reset();
+    } else {
+      alert("Something went wrong. Please try again.");
     }
-  }}
+  } catch (error) {
+    console.error(error);
+    alert("Could not connect to server. Try again later.");
+  }
+}}
 >
                 <div>
                   <label style={styles.label} htmlFor="name">
