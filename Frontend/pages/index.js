@@ -617,7 +617,7 @@ export default function Home() {
               <h3 style={styles.cardTitle}>Send us a message</h3>
               <form
   style={styles.form}
-  onSubmit={async (e) => {
+onSubmit={async (e) => {
   e.preventDefault();
 
   const formData = {
@@ -637,16 +637,27 @@ export default function Home() {
       }
     );
 
-    const data = await res.json();
+    let data = {};
+    try {
+      data = await res.json();
+    } catch (err) {
+      console.log("JSON parse error for contact response:", err);
+    }
 
-    if (data.success) {
-      alert("🎉 Thank you for contacting StudyBuddy! We will get back to you shortly.");
+    console.log("Contact API response:", res.status, data);
+
+    if (res.ok) {
+      alert(
+        "Thank you for contacting StudyBuddy! We have received your message."
+      );
       e.target.reset();
     } else {
-      alert("Something went wrong. Please try again.");
+      alert(
+        data.error || "Something went wrong on the server. Please try again."
+      );
     }
   } catch (error) {
-    console.error(error);
+    console.error("Contact form network error:", error);
     alert("Could not connect to server. Try again later.");
   }
 }}
