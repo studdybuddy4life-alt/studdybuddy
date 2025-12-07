@@ -3,7 +3,7 @@ const router = express.Router();
 const nodemailer = require("nodemailer");
 
 // POST /api/contact
-router.post("/", async (req, res) => {
+router.post("/", (req, res) => {
   const { name, email, grade, message } = req.body;
 
   if (!name || !email || !message) {
@@ -17,6 +17,14 @@ router.post("/", async (req, res) => {
     message,
   });
 
+  // ✅ 1. Reply to the frontend immediately so the form
+  //     always shows success (if validation passed)
+  res.status(200).json({
+    success: true,
+    message: "Message received",
+  });
+
+  // ✅ 2. Send email in the background – does NOT block the user
   try {
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -46,23 +54,18 @@ ${message}
       `,
     };
 
-    console.log("➡️ About to send mail via Gmail to:", toEmail);
-
-    const info = await transporter.sendMail(mailOptions);
-
-    console.log("✅ Contact email sent successfully:");
-    console.log(info);
-
-    return res.status(200).json({
-      success: true,
-      message: "Message received and email sent",
-    });
+    // Run sendMail asynchronously, log success or error
+    (async () => {
+      try {
+        console.log("➡️ About to send mail via Gmail to:", toEmail);
+        const info = await transporter.sendMail(mailOptions);
+        console.log("✅ Contact email sent successfully:", info.response);
+      } catch (err) {
+        console.error("❌ Error sending contact email:", err);
+      }
+    })();
   } catch (err) {
-    console.error("❌ Error sending contact email:", err);
-    return res.status(500).json({
-      success: false,
-      error: "Failed to send email",
-    });
+    console.error("❌ Contact route outer error:", err);
   }
 });
 
