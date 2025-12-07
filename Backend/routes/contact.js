@@ -2,11 +2,10 @@ const express = require("express");
 const router = express.Router();
 const nodemailer = require("nodemailer");
 
-router.post("/", async (req, res) => {
+router.post("/", (req, res) => {
   try {
     const { name, email, grade, message } = req.body;
 
-    // Basic validation
     if (!name || !email || !message) {
       return res.status(400).json({ error: "Missing required fields" });
     }
@@ -18,7 +17,14 @@ router.post("/", async (req, res) => {
       message,
     });
 
-    // Create Gmail transporter – uses env vars from Render
+    // 👉 Respond to the frontend IMMEDIATELY
+    // so the user doesn't wait for Gmail
+    res.status(200).json({
+      success: true,
+      message: "Message received",
+    });
+
+    // 👉 Now send the email in the background (no await)
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -29,7 +35,6 @@ router.post("/", async (req, res) => {
 
     const toEmail = process.env.CONTACT_TO_EMAIL || process.env.EMAIL_USER;
 
-    // Compose email to YOU (admin)
     const mailOptions = {
       from: `"StudyBuddy Contact" <${process.env.EMAIL_USER}>`,
       to: toEmail,
@@ -46,17 +51,19 @@ ${message}
       `,
     };
 
-    // Send email
-    await transporter.sendMail(mailOptions);
-    console.log("✅ Contact email sent successfully");
-
-    return res.status(200).json({
-      success: true,
-      message: "Message received",
-    });
+    transporter
+      .sendMail(mailOptions)
+      .then((info) => {
+        console.log("✅ Contact email sent successfully:", info.response);
+      })
+      .catch((err) => {
+        console.error("❌ Error sending contact email:", err);
+      });
   } catch (err) {
-    console.error("❌ Contact route error:", err);
-    return res.status(500).json({ error: "Server error" });
+    console.error("❌ Contact route error (outer catch):", err);
+    if (!res.headersSent) {
+      return res.status(500).json({ error: "Server error" });
+    }
   }
 });
 
