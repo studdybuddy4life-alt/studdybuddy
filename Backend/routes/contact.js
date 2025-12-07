@@ -17,14 +17,13 @@ router.post("/", (req, res) => {
       message,
     });
 
-    // 👉 Respond to the frontend IMMEDIATELY
-    // so the user doesn't wait for Gmail
+    // Respond immediately so frontend is fast
     res.status(200).json({
       success: true,
       message: "Message received",
     });
 
-    // 👉 Now send the email in the background (no await)
+    // Send email in background
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -59,6 +58,7 @@ ${message}
       .catch((err) => {
         console.error("❌ Error sending contact email:", err);
       });
+
   } catch (err) {
     console.error("❌ Contact route error (outer catch):", err);
     if (!res.headersSent) {
