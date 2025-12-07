@@ -14,56 +14,46 @@ router.post("/", async (req, res) => {
     console.log("📩 New Contact Form Submission:");
     console.log({ name, email, grade, message });
 
-    // Create Gmail transporter
+    // Create Gmail transporter using env vars
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_PASS
-      }
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
     });
+
+    const toEmail = process.env.CONTACT_TO_EMAIL || process.env.EMAIL_USER;
+
+    console.log("➡️ Sending email via Gmail:");
+    console.log("From:", process.env.EMAIL_USER);
+    console.log("To:", toEmail);
 
     // Email to YOU (admin)
     await transporter.sendMail({
-      from: `"StudyBuddy Contact" <${process.env.GMAIL_USER}>`,
-      to: process.env.GMAIL_USER,
-      subject: "New Contact Message",
+      from: `"StudyBuddy Contact" <${process.env.EMAIL_USER}>`,
+      to: toEmail,
+      subject: "New StudyBuddy Contact Form Message",
       text: `
-Name: ${name}
-Email: ${email}
-Grade: ${grade}
-Message: ${message}
-      `
+New message from StudyBuddy Contact Form:
+
+Name:   ${name}
+Email:  ${email}
+Grade:  ${grade || "Not specified"}
+
+Message:
+${message}
+      `,
     });
 
-    // Thank you email to USER
-    await transporter.sendMail({
-      from: `"StudyBuddy" <${process.env.GMAIL_USER}>`,
-      to: email,
-      subject: "Thank You for Contacting StudyBuddy!",
-      text: `
-Hi ${name},
-
-Thank you for reaching out to StudyBuddy! 🎓  
-We have received your message and our team will contact you shortly.
-
-✔ Your Message:  
-"${message}"
-
-We are always here to support your learning journey.
-
-Warm regards,  
-StudyBuddy Team
-      `
-    });
+    console.log("✅ Email sent successfully from backend");
 
     return res.status(200).json({
       success: true,
-      message: "Message sent successfully"
+      message: "Message received",
     });
-
   } catch (err) {
-    console.error("Contact route error:", err);
+    console.error("❌ Contact route error (email failed):", err);
     return res.status(500).json({ error: "Server error" });
   }
 });
