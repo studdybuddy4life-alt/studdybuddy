@@ -32,9 +32,13 @@ Message: ${message}
 
     return res.status(200).json({ success: true, message: "Message received" });
   } catch (error) {
+  if (error.response) {
+    console.error("❌ SendGrid Error:", error.response.body);
+  } else {
     console.error("❌ SendGrid Error:", error);
-    return res.status(500).json({ success: false, error: "Email sending failed" });
   }
+  return res.status(500).json({ success: false, error: "Email sending failed" });
+}
 });
 
 module.exports = router;
