@@ -17,6 +17,7 @@ const referralRoute = require("./routes/referral");
 const subscriptionRoute = require("./routes/subscription");
 const subscriptionUsageRoute = require("./routes/subscriptionUsage");
 const contactRoute = require("./routes/contact"); // ✨ contact form route
+const adminRoute = require("./routes/admin");
 
 // Create app and server
 const app = express();
@@ -45,6 +46,7 @@ app.use("/subscription-usage", subscriptionUsageRoute);
 
 // Contact form endpoint (used by frontend at /api/contact)
 app.use("/api/contact", contactRoute);
+app.use("/admin", adminRoute);
 
 // MongoDB connect
 const MONGO_URI =
