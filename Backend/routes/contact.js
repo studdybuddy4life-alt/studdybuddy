@@ -1,9 +1,12 @@
+// Backend/routes/contact.js
 const express = require("express");
 const router = express.Router();
 const sgMail = require("@sendgrid/mail");
+const ContactMessage = require("../models/ContactMessage");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+// POST /api/contact
 router.post("/", async (req, res) => {
   try {
     const { name, email, grade, message } = req.body;
@@ -12,33 +15,48 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    console.log("📩 New Contact Form Submission:", { name, email, grade, message });
+    // Save in MongoDB
+    const saved = await ContactMessage.create({ name, email, grade, message });
+    console.log("💾 Saved contact message:", saved._id);
 
+    // Prepare email
     const msg = {
       to: process.env.CONTACT_TO_EMAIL,
-      from: process.env.EMAIL_FROM, // must be verified sender in SendGrid
+      from: { email: process.env.EMAIL_FROM, name: "StudyBuddy" },
       subject: "New StudyBuddy Contact Message",
       text: `
+New contact form submission
+
 Name: ${name}
 Email: ${email}
 Grade: ${grade}
-Message: ${message}
-      `,
+Message:
+${message}
+
+Saved ID: ${saved._id}
+`,
     };
 
-    await sgMail.send(msg);
+    // Send email (async)
+    (async () => {
+      try {
+        await sgMail.send(msg);
+        console.log("✅ Email sent successfully via SendGrid");
+      } catch (err) {
+        if (err.response && err.response.body) {
+          console.error("❌ SendGrid Error:", err.response.body);
+        } else {
+          console.error("❌ SendGrid Error:", err);
+        }
+      }
+    })();
 
-    console.log("✅ Email sent successfully via SendGrid");
-
-    return res.status(200).json({ success: true, message: "Message received" });
+    // Respond to client
+    return res.status(200).json({ success: true, message: "Message received", id: saved._id });
   } catch (error) {
-  if (error.response) {
-    console.error("❌ SendGrid Error:", error.response.body);
-  } else {
-    console.error("❌ SendGrid Error:", error);
+    console.error("Contact route error:", error);
+    return res.status(500).json({ success: false, error: "Server error" });
   }
-  return res.status(500).json({ success: false, error: "Email sending failed" });
-}
 });
 
 module.exports = router;
