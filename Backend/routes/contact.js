@@ -2,60 +2,66 @@
 const express = require("express");
 const router = express.Router();
 const sgMail = require("@sendgrid/mail");
-const ContactMessage = require("../models/ContactMessage");
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+if (process.env.SENDGRID_API_KEY) {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+} else {
+  console.warn("SENDGRID_API_KEY not set — emails will not be sent.");
+}
 
 // POST /api/contact
 router.post("/", async (req, res) => {
   try {
-    const { name, email, grade, message } = req.body;
+    const { name, email, grade, message } = req.body || {};
 
-    if (!name || !email || !grade || !message) {
-      return res.status(400).json({ error: "Missing required fields" });
+    if (!name || !email || !message) {
+      return res.status(400).json({ success: false, error: "Missing required fields" });
     }
 
-    // Save in MongoDB
-    const saved = await ContactMessage.create({ name, email, grade, message });
-    console.log("💾 Saved contact message:", saved._id);
+    // Respond immediately so the frontend is fast
+    res.status(200).json({ success: true, message: "Thank you for contacting StudyBuddy" });
 
-    // Prepare email
-    const msg = {
-      to: process.env.CONTACT_TO_EMAIL,
-      from: { email: process.env.EMAIL_FROM, name: "StudyBuddy" },
-      subject: "New StudyBuddy Contact Message",
-      text: `
-New contact form submission
+    // Send email in background (fire-and-forget)
+    (async () => {
+      try {
+        if (!process.env.SENDGRID_API_KEY) {
+          console.log("Skipping email send because SENDGRID_API_KEY is not set.");
+          return;
+        }
+
+        const msg = {
+          to: process.env.CONTACT_TO_EMAIL,
+          from: { email: process.env.EMAIL_FROM || process.env.CONTACT_TO_EMAIL },
+          subject: `New Contact: ${name}`,
+          text:
+`New contact form submission
 
 Name: ${name}
 Email: ${email}
-Grade: ${grade}
+Grade: ${grade || "N/A"}
 Message:
 ${message}
-
-Saved ID: ${saved._id}
 `,
-    };
+        };
 
-    // Send email (async)
-    (async () => {
-      try {
         await sgMail.send(msg);
-        console.log("✅ Email sent successfully via SendGrid");
+        console.log("✅ Contact email sent (background).");
       } catch (err) {
+        // Log error but nothing is sent back to client (we already responded)
         if (err.response && err.response.body) {
-          console.error("❌ SendGrid Error:", err.response.body);
+          console.error("SendGrid error:", err.response.body);
         } else {
-          console.error("❌ SendGrid Error:", err);
+          console.error("SendGrid error:", err);
         }
       }
     })();
 
-    // Respond to client
-    return res.status(200).json({ success: true, message: "Message received", id: saved._id });
-  } catch (error) {
-    console.error("Contact route error:", error);
-    return res.status(500).json({ success: false, error: "Server error" });
+  } catch (err) {
+    console.error("Contact route unexpected error:", err);
+    // If response already sent above then nothing to do; otherwise reply error:
+    if (!res.headersSent) {
+      res.status(500).json({ success: false, error: "Server error" });
+    }
   }
 });
 
