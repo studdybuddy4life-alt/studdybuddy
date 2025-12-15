@@ -43,6 +43,34 @@ Message:
 ${message}
 `,
         };
+// Auto-reply email to user
+await sgMail.send({
+  to: email, // user's email from form
+  from: {
+    email: process.env.EMAIL_FROM,
+    name: "StuddyBuddy Team",
+  },
+  subject: "Thank you for contacting StuddyBuddy 🎓",
+  text: `
+Hi ${name},
+
+Thank you for contacting StuddyBuddy!
+
+We have received your message and one of our expert tutors will reach out to you shortly.
+
+✨ What we offer:
+• Science, Maths & Technology
+• From K-12 to Master’s level
+• Fun & concept-based learning
+• Led by 25+ elite tutors
+
+We are with you at every stage of learning.
+
+Warm regards,
+StuddyBuddy Team
+https://studdybuddy-blue.vercel.app
+  `,
+});
 
         await sgMail.send(msg);
         console.log("✅ Contact email sent (background).");
