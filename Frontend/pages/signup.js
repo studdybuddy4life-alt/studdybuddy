@@ -1,82 +1,69 @@
-import { useState } from "react";
-import axios from "axios";
+import { SignUp } from "@clerk/nextjs";
 
 export default function Signup() {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    referralCode: "",
-  });
-
-  const [loading, setLoading] = useState(false);
-
-  const submit = async (e) => {
-    e.preventDefault();
-
-    if (!form.email) {
-      alert("Please enter your email");
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
-        { email: form.email } // ✅ SEND ONLY EMAIL
-      );
-
-      alert("OTP sent to your email");
-    } catch (err) {
-      console.error(err);
-      alert(err?.response?.data?.message || "Failed to send OTP");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <div style={{ padding: 30, maxWidth: 400 }}>
-      <h1>Signup</h1>
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "grid",
+        placeItems: "center",
+        background:
+          "radial-gradient(circle at top, #0f172a 0%, #020617 55%, #020617 100%)",
+        padding: "2rem",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 420,
+          width: "100%",
+          padding: "2rem",
+          borderRadius: "1.5rem",
+          background:
+            "linear-gradient(145deg, rgba(15,23,42,0.95), rgba(30,41,59,0.95))",
+          border: "1px solid rgba(56,189,248,0.3)",
+          boxShadow: "0 30px 80px rgba(15,23,42,0.9)",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "1.7rem",
+            fontWeight: 700,
+            color: "white",
+            marginBottom: "0.3rem",
+          }}
+        >
+          Create your StudyBuddy account
+        </h1>
 
-      <form onSubmit={submit}>
-        <input
-          placeholder="Full name"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-          style={{ width: "100%", marginBottom: 10 }}
+        <p
+          style={{
+            fontSize: "0.9rem",
+            color: "rgba(148,163,184,0.95)",
+            marginBottom: "1.2rem",
+          }}
+        >
+          Start learning Science, Maths & Technology — the smart way.
+        </p>
+
+        <SignUp
+          appearance={{
+            variables: {
+              colorPrimary: "#38bdf8",
+              colorText: "#e5e7eb",
+              colorBackground: "#020617",
+              borderRadius: "12px",
+            },
+            elements: {
+              card: {
+                background: "transparent",
+                boxShadow: "none",
+              },
+              footer: { display: "none" },
+            },
+          }}
+          redirectUrl="/dashboard"
         />
-
-        <input
-          required
-          placeholder="Email"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-          style={{ width: "100%", marginBottom: 10 }}
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-          style={{ width: "100%", marginBottom: 10 }}
-        />
-
-        <input
-          placeholder="Referral Code (optional)"
-          value={form.referralCode}
-          onChange={(e) =>
-            setForm({ ...form, referralCode: e.target.value })
-          }
-          style={{ width: "100%", marginBottom: 20 }}
-        />
-
-        <button type="submit" disabled={loading}>
-          {loading ? "Sending OTP..." : "Send OTP"}
-        </button>
-      </form>
+      </div>
     </div>
   );
 }
