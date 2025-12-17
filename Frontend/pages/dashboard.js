@@ -1,4 +1,9 @@
-import { SignedIn, SignedOut, RedirectToSignIn, UserButton } from "@clerk/nextjs";
+import {
+  SignedIn,
+  SignedOut,
+  RedirectToSignIn,
+  UserButton,
+} from "@clerk/nextjs";
 
 export default function Dashboard() {
   return (
@@ -39,23 +44,24 @@ export default function Dashboard() {
             <DashboardCard
               title="📚 Courses"
               text="View enrolled subjects, lessons and progress."
+              href="/dashboard/courses"
             />
             <DashboardCard
               title="📈 Progress"
               text="Track improvement across topics and tests."
+              href="/dashboard/progress"
             />
             <DashboardCard
               title="💬 Messages"
               text="Chat with tutors and get doubt resolution."
+              href="/dashboard/messages"
             />
             <DashboardCard
               title="🗓 Class Schedule"
               text="Upcoming live classes and booked sessions."
+              href="/dashboard/schedule"
             />
           </section>
-
-          {/* PASSWORD NOTICE */}
-          <PasswordNotice />
         </div>
       </SignedIn>
 
@@ -66,9 +72,10 @@ export default function Dashboard() {
   );
 }
 
-function DashboardCard({ title, text }) {
+function DashboardCard({ title, text, href }) {
   return (
-    <div
+    <a
+      href={href}
       style={{
         padding: "1.4rem",
         borderRadius: "1.2rem",
@@ -76,6 +83,21 @@ function DashboardCard({ title, text }) {
           "linear-gradient(145deg, rgba(15,23,42,0.95), rgba(30,41,59,0.95))",
         border: "1px solid rgba(56,189,248,0.25)",
         boxShadow: "0 16px 32px rgba(15,23,42,0.8)",
+        textDecoration: "none",
+        color: "white",
+        cursor: "pointer",
+        transition: "transform 0.15s ease, box-shadow 0.15s ease",
+        display: "block",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = "translateY(-4px)";
+        e.currentTarget.style.boxShadow =
+          "0 20px 40px rgba(15,23,42,0.95)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = "none";
+        e.currentTarget.style.boxShadow =
+          "0 16px 32px rgba(15,23,42,0.8)";
       }}
     >
       <h3 style={{ fontSize: "1.05rem", marginBottom: "0.4rem" }}>
@@ -84,27 +106,6 @@ function DashboardCard({ title, text }) {
       <p style={{ fontSize: "0.9rem", color: "rgba(226,232,240,0.9)" }}>
         {text}
       </p>
-    </div>
-  );
-}
-
-function PasswordNotice() {
-  return (
-    <div
-      style={{
-        marginTop: "2.5rem",
-        padding: "1rem 1.2rem",
-        borderRadius: "1rem",
-        background:
-          "linear-gradient(135deg, rgba(34,197,94,0.18), rgba(56,189,248,0.18))",
-        border: "1px solid rgba(56,189,248,0.4)",
-      }}
-    >
-      <strong>🔐 Optional: Set a password</strong>
-      <p style={{ fontSize: "0.85rem", marginTop: "0.3rem" }}>
-        You signed in using OTP or Google. You can optionally set a password
-        from your account settings for faster future logins.
-      </p>
-    </div>
+    </a>
   );
 }
