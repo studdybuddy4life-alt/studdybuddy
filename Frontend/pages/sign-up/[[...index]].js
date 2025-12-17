@@ -18,17 +18,36 @@ export default function SignUpPage() {
           variables: {
             colorPrimary: "#38bdf8",
             colorBackground: "#020617",
-            colorText: "#0f172a",
+            colorText: "#e5e7eb",
+            colorTextSecondary: "#cbd5e1",
             borderRadius: "12px",
           },
           elements: {
+            card: {
+              boxShadow: "0 30px 80px rgba(15,23,42,0.9)",
+            },
             formFieldInput: {
               backgroundColor: "#ffffff",
               color: "#0f172a",
               border: "1px solid #cbd5e1",
             },
-            card: {
-              boxShadow: "0 30px 80px rgba(15,23,42,0.9)",
+            formFieldLabel: {
+              color: "#e5e7eb",
+            },
+            headerTitle: {
+              color: "#f8fafc",
+            },
+            headerSubtitle: {
+              color: "#cbd5e1",
+            },
+            dividerText: {
+              color: "#cbd5e1",
+            },
+            footerActionText: {
+              color: "#cbd5e1",
+            },
+            footerActionLink: {
+              color: "#38bdf8",
             },
           },
         }}
