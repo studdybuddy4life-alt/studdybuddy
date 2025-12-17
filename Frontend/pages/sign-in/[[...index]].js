@@ -1,5 +1,4 @@
 import { SignIn } from "@clerk/nextjs";
-import Image from "next/image";
 
 export default function SignInPage() {
   return (
@@ -13,17 +12,42 @@ export default function SignInPage() {
         padding: "2rem",
       }}
     >
-      {/* LOGO + TITLE */}
-      <div style={{ width: "100%", maxWidth: "420px" }}>
-        <div style={{ textAlign: "center", marginBottom: "1rem" }}>
-          <Image
-            src="/studybuddy-logo.svg"
-            alt="StudyBuddy"
-            width={60}
-            height={60}
-          />
-          <h2 style={{ color: "#f8fafc", marginTop: "0.6rem" }}>
-            Sign in to StudyBuddy
-          </h2>
-          <p style={{ color: "#cbd5e1", fontSize: "0.9rem" }}>
-            Continu
+      <SignIn
+        appearance={{
+          variables: {
+            colorPrimary: "#38bdf8",
+            colorBackground: "#020617",
+            colorText: "#e5e7eb",
+            colorTextSecondary: "#cbd5e1",
+            borderRadius: "12px",
+          },
+          elements: {
+            card: {
+              background: "#020617",
+              boxShadow: "0 30px 80px rgba(15,23,42,0.9)",
+            },
+            headerTitle: {
+              color: "#f8fafc",
+            },
+            headerSubtitle: {
+              color: "#cbd5e1",
+            },
+            formFieldLabel: {
+              color: "#e5e7eb",
+            },
+            formFieldInput: {
+              backgroundColor: "#ffffff",
+              color: "#020617",
+            },
+            otpCodeFieldInput: {
+              backgroundColor: "#ffffff",
+              color: "#020617",
+              border: "1px solid #38bdf8",
+            },
+          },
+        }}
+        redirectUrl="/dashboard"
+      />
+    </div>
+  );
+}
