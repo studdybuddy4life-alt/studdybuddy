@@ -1,4 +1,5 @@
 import { SignUp } from "@clerk/nextjs";
+import Image from "next/image";
 
 export default function SignUpPage() {
   return (
@@ -8,50 +9,31 @@ export default function SignUpPage() {
         display: "grid",
         placeItems: "center",
         background:
-          "radial-gradient(circle at top, #0f172a 0%, #020617 60%, #020617 100%)",
+          "radial-gradient(circle at top, #0f172a 0%, #020617 55%, #020617 100%)",
         padding: "2rem",
       }}
     >
-      <SignUp
-        redirectUrl="/dashboard"
-        appearance={{
-          variables: {
-            colorPrimary: "#38bdf8",
-            colorBackground: "#020617",
-            colorText: "#e5e7eb",
-            colorTextSecondary: "#cbd5e1",
-            borderRadius: "12px",
-          },
-          elements: {
-            card: {
-              boxShadow: "0 30px 80px rgba(15,23,42,0.9)",
-            },
-            formFieldInput: {
-              backgroundColor: "#ffffff",
-              color: "#0f172a",
-              border: "1px solid #cbd5e1",
-            },
-            formFieldLabel: {
-              color: "#e5e7eb",
-            },
-            headerTitle: {
-              color: "#f8fafc",
-            },
-            headerSubtitle: {
-              color: "#cbd5e1",
-            },
-            dividerText: {
-              color: "#cbd5e1",
-            },
-            footerActionText: {
-              color: "#cbd5e1",
-            },
-            footerActionLink: {
-              color: "#38bdf8",
-            },
-          },
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "420px",
+          padding: "2rem",
+          borderRadius: "1.5rem",
+          background:
+            "linear-gradient(145deg, rgba(15,23,42,0.96), rgba(30,41,59,0.96))",
+          border: "1px solid rgba(56,189,248,0.35)",
+          boxShadow: "0 30px 80px rgba(15,23,42,0.9)",
         }}
-      />
-    </div>
-  );
-}
+      >
+        {/* LOGO */}
+        <div style={{ textAlign: "center", marginBottom: "1rem" }}>
+          <Image
+            src="/studybuddy-logo.svg"
+            alt="StudyBuddy"
+            width={64}
+            height={64}
+          />
+          <h1 style={{ color: "white", marginTop: "0.6rem" }}>
+            Create your StudyBuddy account
+          </h1>
+          <p style={{ color: "#94
