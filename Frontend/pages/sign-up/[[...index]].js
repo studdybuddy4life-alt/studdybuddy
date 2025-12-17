@@ -18,8 +18,23 @@ export default function SignUpPage() {
           variables: {
             colorPrimary: "#38bdf8",
             colorBackground: "#020617",
-            colorText: "#e5e7eb",
+            colorText: "#0f172a",
             borderRadius: "12px",
+          },
+          elements: {
+            formFieldInput: {
+              backgroundColor: "#ffffff",
+              color: "#0f172a",
+              border: "1px solid #cbd5e1",
+            },
+            otpCodeFieldInput: {
+              backgroundColor: "#ffffff",
+              color: "#0f172a",
+              border: "1px solid #cbd5e1",
+            },
+            card: {
+              boxShadow: "0 30px 80px rgba(15,23,42,0.9)",
+            },
           },
         }}
       />
