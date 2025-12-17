@@ -63,7 +63,7 @@ export default function Home() {
       padding: 0,
       color: "inherit",
     },
-    signInButton: {
+    signInBtn: {
       padding: "0.45rem 1.1rem",
       borderRadius: "999px",
       border: "1px solid rgba(148,163,184,0.7)",
@@ -74,6 +74,7 @@ export default function Home() {
       cursor: "pointer",
     },
     section: { paddingTop: "2.6rem" },
+
     heroLayout: {
       display: "grid",
       gridTemplateColumns: "minmax(0, 1.4fr) minmax(0, 1fr)",
@@ -193,8 +194,8 @@ export default function Home() {
             Contact
           </button>
 
-          {/* SIGN IN BUTTON */}
-          <a href="/sign-in" style={styles.signInButton}>
+          {/* SIGN IN */}
+          <a href="/sign-in" style={styles.signInBtn}>
             Sign in
           </a>
         </nav>
@@ -233,6 +234,27 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* ABOUT */}
+        <section id="about" style={styles.section}>
+          <h2>About StudyBuddy</h2>
+          <p>
+            StudyBuddy connects learners with expert tutors across Science,
+            Maths and Technology, from school to advanced levels.
+          </p>
+        </section>
+
+        {/* REVIEWS */}
+        <section id="reviews" style={styles.section}>
+          <h2>What learners say</h2>
+          <p>Trusted by students, parents and professionals.</p>
+        </section>
+
+        {/* CONTACT */}
+        <section id="contact" style={styles.section}>
+          <h2>Contact us</h2>
+          <p>Have questions? Reach out and we&apos;ll help you.</p>
         </section>
       </div>
 
