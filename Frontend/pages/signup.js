@@ -45,7 +45,10 @@ export default function Signup() {
           Start learning Science, Maths & Technology — the smart way.
         </p>
 
+        {/* ✅ THIS IS THE IMPORTANT PART */}
         <SignUp
+          afterSignUpUrl="/dashboard"
+          signInUrl="/sign-in"
           appearance={{
             variables: {
               colorPrimary: "#38bdf8",
@@ -61,7 +64,6 @@ export default function Signup() {
               footer: { display: "none" },
             },
           }}
-          redirectUrl="/dashboard"
         />
       </div>
     </div>
