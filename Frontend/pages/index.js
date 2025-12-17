@@ -376,6 +376,9 @@ export default function Home() {
           >
             Contact
           </button>
+          <a href="/sign-in" style={styles.secondaryButton}>
+           Sign in
+          </a>
         </nav>
       </header>
 
