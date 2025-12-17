@@ -416,7 +416,7 @@ export default function Home() {
               </div>
 
               <div style={styles.buttonRow}>
-                <a href="/signup" style={styles.primaryButton}>
+                <a href="/sign-up" style={styles.primaryButton}>
                   🎓 Start learning – it&apos;s fun & structured
                 </a>
                 <a href="/apply-tutor" style={styles.secondaryButton}>
